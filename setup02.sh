@@ -48,8 +48,4 @@ systemctl stop shairport-sync
 systemctl enable shairport-sync
 systemctl start shairport-sync
 
-systemctl disable sps-install
-rm /etc/systemd/system/sps-install.service
-systemctl daemon-reload
-
 echo "Done."

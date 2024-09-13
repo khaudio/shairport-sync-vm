@@ -65,18 +65,4 @@ apt -y install parted openssh-server
 
 printf "fix\n1\nyes\n-0" | parted ---pretend-input-tty /dev/sda resizepart
 
-cat > /etc/systemd/system/sps-install.service << EOF
-[Unit]
-Description=Run script at next reboot
-Before=reboot.target
-DefaultDependencies=no
-
-[Service]
-Type=oneshot
-ExecStart=/root/shairport-sync-vm/setup02.sh
-EOF
-
-systemctl daemon-reload
-systemctl enable sps-install
-
 reboot
