@@ -63,11 +63,20 @@ chmod +x ~/bin/*.sh
 apt update
 apt -y install parted openssh-server
 
-# PARTSIZE=`fdisk -l /dev/sda | grep "Disk /dev/sda" | cut -d ' ' -f 5`
-# PARTSIZEMB=`expr $PARTSIZE / 1024 / 1024`
-# MAXSIZEMB=`echo 'print list' | parted | grep "Disk /dev/sda" | cut -d ' ' -f 3 | tr -d MB`
+printf "fix\n1\nyes\n-0" | parted ---pretend-input-tty /dev/sda resizepart
 
-printf "fix\nyes" | parted ---pretend-input-tty /dev/sda resizepart 1 4295
+cat > /etc/systemd/system/sps-install.service << EOF
+[Unit]
+Description=Run script at next reboot
+Before=reboot.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/root/shairport-sync-vm/setup02.sh
+EOF
+
+systemctl daemon-reload
+systemctl enable sps-install
 
 reboot
-
