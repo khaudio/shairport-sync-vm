@@ -9,4 +9,5 @@ apt -y install git
 cd ~
 git clone https://github.com/khaudio/shairport-sync-vm.git
 cd shairport-sync-vm
+chmod +x ./*.sh
 setup01.sh
