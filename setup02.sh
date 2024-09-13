@@ -48,4 +48,6 @@ systemctl stop shairport-sync
 systemctl enable shairport-sync
 systemctl start shairport-sync
 
-echo "Done."
+echo "Done... rebooting."
+
+reboot
