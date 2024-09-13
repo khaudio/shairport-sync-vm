@@ -63,10 +63,11 @@ chmod +x ~/bin/*.sh
 apt update
 apt -y install fdisk parted openssh-server
 
-PARTSIZE=`fdisk -l /dev/sda | grep "Disk /dev/sda" | cut -d ' ' -f 5`
-PARTSIZEMB=`expr $PARTSIZE / 1024 / 1024`
-MAXSIZEMB=`echo 'print list' | parted | grep "Disk /dev/sda" | cut -d ' ' -f 3 | tr -d MB`
-parted --script /dev/sda resizepart 1 ${MAXSIZEMB}
+# PARTSIZE=`fdisk -l /dev/sda | grep "Disk /dev/sda" | cut -d ' ' -f 5`
+# PARTSIZEMB=`expr $PARTSIZE / 1024 / 1024`
+# MAXSIZEMB=`echo 'print list' | parted | grep "Disk /dev/sda" | cut -d ' ' -f 3 | tr -d MB`
+
+echo "yes" | parted /dev/sda resizepart 1 4295
 
 reboot
 
