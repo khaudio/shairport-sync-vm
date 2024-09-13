@@ -2,8 +2,14 @@
 
 # Run after initial VM creation
 
-hostnamectl set-hostname airplay-001
-passwd
+read -p "Enter hostname: " HOSTNAME
+hostnamectl set-hostname $HOSTNAME
+
+# Uncomment to set root password.  This is removed because
+# although we are installing openssh, we are not enabling
+# sshd by default.
+
+# passwd
 
 cp ./template/shairport-sync.conf ~/shairport-sync.conf
 mkdir ~/bin
