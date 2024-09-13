@@ -37,7 +37,7 @@ EOF
 cat > ~/bin/enable-root-ssh.sh << EOF
 echo PermitRootLogin yes >> /etc/ssh/sshd_config
 systemctl enable sshd
-systemctl start sshd
+systemctl restart sshd
 EOF
 
 cat > ~/bin/disable-root-ssh.sh << EOF

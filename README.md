@@ -30,7 +30,7 @@ Boot the vm and login as `root` (no default pw).
 
 ## On Guest
 
-Run `setup.sh` and/or follow the steps below.
+Run `setup01.sh`, reboot, then run `setup02.sh`.  Alternativley, follow the steps, below.
 
 Where `airplay-001` is the desired hostname for the virtual machine
 
@@ -69,7 +69,7 @@ ssh `root@192.168.1.99`
 ### Resize partition to fill volume
 
 ```bash
-apt -y install gdisk parted fdisk usbutils alsa-utils
+apt -y install parted usbutils alsa-utils
 ```
 
 ```bash
@@ -118,7 +118,8 @@ apt install --no-install-recommends -y build-essential git autoconf automake \
 libtool libpopt-dev libconfig-dev libasound2-dev avahi-daemon \
 libavahi-client-dev libglib2.0-dev libmosquitto-dev libssl-dev libsoxr-dev \
 libplist-dev libsndfile1-dev libsodium-dev libavutil-dev libavcodec-dev \
-libavformat-dev uuid-dev libgcrypt-dev xxd qemu-guest-agent htop
+libavformat-dev uuid-dev libgcrypt-dev xxd usbutils alsa-utils \
+qemu-guest-agent htop
 ```
 
 Install `nqptp` first
@@ -232,8 +233,8 @@ EOF
 ```bash
 cat > ~/bin/disable-root-ssh.sh << EOF
 sed -i -e '/PermitRootLogin yes/d' /etc/ssh/sshd_config
+systemctl stop sshd
 systemctl disable sshd
-systemctl restart sshd
 EOF
 ```
 
