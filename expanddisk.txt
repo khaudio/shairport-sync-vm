@@ -1,0 +1,7 @@
+/dev/sda
+print
+fix
+resizepart 1
+yes
+-0
+quit
