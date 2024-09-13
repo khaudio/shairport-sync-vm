@@ -44,6 +44,7 @@ ALSADEVICE=$(aplay -L | grep default: | grep -v sysdefault:)
 sed -i "s/default:CARD=Device/$ALSADEVICE/g" ~/shairport-sync.conf
 
 ~/bin/cp-sps-conf.sh
+~/bin/disable-root-ssh.sh
 systemctl stop shairport-sync
 systemctl enable shairport-sync
 systemctl start shairport-sync
