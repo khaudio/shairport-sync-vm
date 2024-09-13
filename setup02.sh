@@ -2,12 +2,15 @@
 
 # Run after reboot after running setup01.sh
 
+set -e
+
 apt update && apt -y upgrade
 apt install --no-install-recommends -y build-essential git autoconf automake \
 libtool libpopt-dev libconfig-dev libasound2-dev avahi-daemon \
 libavahi-client-dev libglib2.0-dev libmosquitto-dev libssl-dev libsoxr-dev \
 libplist-dev libsndfile1-dev libsodium-dev libavutil-dev libavcodec-dev \
-libavformat-dev uuid-dev libgcrypt-dev xxd qemu-guest-agent htop
+libavformat-dev uuid-dev libgcrypt-dev xxd usbutils alsa-utils \
+qemu-guest-agent htop
 
 cd
 git clone https://github.com/mikebrady/nqptp.git

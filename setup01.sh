@@ -2,6 +2,8 @@
 
 # Run after initial VM creation
 
+set -e
+
 read -p "Enter hostname: " HOSTNAME
 hostnamectl set-hostname $HOSTNAME
 
@@ -35,13 +37,13 @@ EOF
 cat > ~/bin/enable-root-ssh.sh << EOF
 echo PermitRootLogin yes >> /etc/ssh/sshd_config
 systemctl enable sshd
-systemctl restart sshd
+systemctl start sshd
 EOF
 
 cat > ~/bin/disable-root-ssh.sh << EOF
 sed -i -e '/PermitRootLogin yes/d' /etc/ssh/sshd_config
+systemctl stop sshd
 systemctl disable sshd
-systemctl restart sshd
 EOF
 
 cat > ~/prepare_template_before_cloning.sh << EOF
@@ -59,8 +61,12 @@ chmod +x ~/*.sh
 chmod +x ~/bin/*.sh
 
 apt update
-apt -y install openssh-server gdisk parted \
-fdisk usbutils alsa-utils
+apt -y install fdisk parted openssh-server
 
-parted < expanddisk.txt
+PARTSIZE=`fdisk -l /dev/sda | grep "Disk /dev/sda" | cut -d ' ' -f 5`
+PARTSIZEMB=`expr $PARTSIZE / 1024 / 1024`
+MAXSIZEMB=`echo 'print list' | parted | grep "Disk /dev/sda" | cut -d ' ' -f 3 | tr -d MB`
+parted --script /dev/sda resizepart 1 ${MAXSIZEMB}
+
 reboot
+
